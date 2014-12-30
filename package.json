@@ -1,12 +1,11 @@
 {
   "name": "ninejs-auth-riak-module",
-  "description": "NineJs Authentication/Authorization module - Riak implementation",
+  "description": "NineJs Authentication/Authorization module - Riak 2.0 HTTP implementation",
   "version": "0.0.1",
   "author": "Eduardo Burgos <eburgos@gmail.com>",
   "repository": "git://github.com/ninejs/ninejs-auth-riak-module",
   "dependencies": {
-    "passport": "*",
-    "riak-js": "*"
+    "reeak": "*"
   },
   "devDependencies": {},
   "component": {
