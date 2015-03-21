@@ -5,7 +5,9 @@
   "author": "Eduardo Burgos <eburgos@gmail.com>",
   "repository": "git://github.com/ninejs/ninejs-auth-riak-module",
   "dependencies": {
-    "reeak": "*"
+    "co": "^4.4.0",
+    "cradle": "^0.6.9",
+    "kew": "^0.5.0"
   },
   "devDependencies": {},
   "component": {

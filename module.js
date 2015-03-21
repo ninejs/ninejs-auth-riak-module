@@ -1,7 +1,7 @@
 'use strict';
 var extend = require('ninejs/core/extend');
 var Module = require('ninejs/modules/Module');
-var Auth = require('./AuthRiak');
+var Auth = require('./AuthCouchDb');
 var result;
 var AuthModule = extend(Module, {
 	consumes: [
@@ -27,8 +27,8 @@ var AuthModule = extend(Module, {
 		var log;
 		if (name === 'ninejs/auth/impl') {
 			log = this.getUnit('ninejs').get('logger');
-			log.info('ninejs/auth/impl (riak) module starting');
-			this.auth = new Auth(config, this);
+			log.info('ninejs/auth/impl (CouchDB) module starting');
+			this.auth = new Auth(config, log, this);
 		}
 	})
 });
