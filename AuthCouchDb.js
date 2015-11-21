@@ -22,7 +22,8 @@ AuthCouchDb = function(config, log, module) {
 	db = storeConnection.database(usersDb);
 	this.login = function(username, password, domain) {
 		/* jshint unused: true */
-		var def = deferredUtils.defer();
+		var def = deferredUtils.defer(),
+			self = this;
 		if (domain) {
 			username += '@' + domain;
 		}
@@ -35,7 +36,7 @@ AuthCouchDb = function(config, log, module) {
 					def.resolve({result: 'failed'});
 				}
 				var data = resp[0].value;
-				if (password && data.active && data.username === username && data.password === hash(password)) {
+				if (password && data.active && data.username === username && data.password === self.hash(username, password)) {
 					data.result = 'success';
 					db.save({
 						type: 'loginAttempt',
@@ -98,6 +99,7 @@ AuthCouchDb = function(config, log, module) {
 			defaultPermissions = options.defaultPermissions || ['administrator'],
 			hash = require('./hashMethod')(options.hashMethod, options.hashEncoding);
 		this.documentName = documentName;
+		this.hash = hash;
 
 		return co(function* () {
 			var dbExists = yield Q.nfcall(db.exists.bind(db));
@@ -125,9 +127,12 @@ AuthCouchDb = function(config, log, module) {
 		});
 	}
 	function getUser(username) {
+		var self = this;
 		return co(function* () {
 			var data = yield Q.nfcall(db.view.bind(db), self.documentName + '/active', { key: username, reduce: true });
 			return data[0].value;
+		}).then(null, function (err) {
+			console.error(err);
 		});
 	}
 	this.init = init;
